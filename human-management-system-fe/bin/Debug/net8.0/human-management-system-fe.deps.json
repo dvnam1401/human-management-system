@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "human-management-system-fe/1.0.0": {
+        "runtime": {
+          "human-management-system-fe.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "human-management-system-fe/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
