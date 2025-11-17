@@ -31,3 +31,4 @@ D:\Workspace\req_project_tientran\human-management-system-fe\obj\Debug\net8.0\re
 D:\Workspace\req_project_tientran\human-management-system-fe\obj\Debug\net8.0\human-management-system-fe.pdb
 D:\Workspace\req_project_tientran\human-management-system-fe\obj\Debug\net8.0\human-management-system-fe.genruntimeconfig.cache
 D:\Workspace\req_project_tientran\human-management-system-fe\obj\Debug\net8.0\ref\human-management-system-fe.dll
+D:\Workspace\req_project_tientran\human-management-system-fe\obj\Debug\net8.0\human-management-system-fe.sourcelink.json

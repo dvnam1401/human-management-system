@@ -50,5 +50,12 @@ public class UserRepository : IUserRepository
                 .ThenInclude(e => e!.Department)
             .FirstOrDefaultAsync(u => u.Id == userId);
     }
+
+    public async Task<User> CreateAsync(User user)
+    {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
 }
 

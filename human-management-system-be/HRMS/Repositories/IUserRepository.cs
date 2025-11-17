@@ -9,5 +9,6 @@ public interface IUserRepository
     Task<User?> GetByEmailAsync(string email);
     Task<bool> UpdatePasswordAsync(int userId, string passwordHash);
     Task<User?> GetUserWithEmployeeDetailsAsync(int userId);
+    Task<User> CreateAsync(User user);
 }
 

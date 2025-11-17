@@ -8,5 +8,6 @@ public interface IApiService
     Task<bool> LogoutAsync();
     Task<UserProfileDto?> GetUserProfileAsync(int userId);
     Task<EmailResponseDto?> SendEmailAsync(SendEmailDto emailDto);
+    Task<LoginResponseDto?> RegisterAsync(RegisterDto registerDto);
 }
 

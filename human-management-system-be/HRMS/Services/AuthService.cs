@@ -69,5 +69,61 @@ public class AuthService : IAuthService
 
         return BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
     }
+
+    public async Task<LoginResponseDto?> RegisterAsync(CreateRegisterDto dto)
+    {
+        try
+        {
+            var existingUser = await _userRepository.GetByUsernameOrEmailAsync(dto.Username);
+            if (existingUser != null)
+            {
+                _logger.LogWarning("Registration failed: Username already exists - {Username}", dto.Username);
+                return null;
+            }
+
+            var existingEmail = await _userRepository.GetByEmailAsync(dto.Email);
+            if (existingEmail != null)
+            {
+                _logger.LogWarning("Registration failed: Email already exists - {Email}", dto.Email);
+                return null;
+            }
+
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+
+            var user = new HRMS.Model1s.User
+            {
+                Username = dto.Username,
+                Email = dto.Email,
+                PasswordHash = passwordHash,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                PhoneNumber = dto.PhoneNumber,
+                DateOfBirth = dto.DateOfBirth,
+                Role = dto.Role ?? "Employee",
+                IsActive = true,
+                CreatedAt = DateTime.Now
+            };
+
+            var createdUser = await _userRepository.CreateAsync(user);
+
+            _logger.LogInformation("User registered successfully - {Username}", createdUser.Username);
+
+            return new LoginResponseDto
+            {
+                UserId = createdUser.Id,
+                Username = createdUser.Username,
+                Email = createdUser.Email,
+                FirstName = createdUser.FirstName,
+                LastName = createdUser.LastName,
+                Role = createdUser.Role,
+                IsActive = createdUser.IsActive ?? true
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during registration for {Username}", dto.Username);
+            return null;
+        }
+    }
 }
 

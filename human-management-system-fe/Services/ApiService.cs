@@ -116,5 +116,27 @@ public class ApiService : IApiService
             };
         }
     }
+
+    public async Task<LoginResponseDto?> RegisterAsync(RegisterDto registerDto)
+    {
+        try
+        {
+            var client = _httpClientFactory.CreateClient("HRMS_API");
+            var response = await client.PostAsJsonAsync("/api/auth/register", registerDto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<LoginResponseDto>();
+            }
+
+            _logger.LogWarning("Register failed with status code: {StatusCode}", response.StatusCode);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error calling register API");
+            return null;
+        }
+    }
 }
 

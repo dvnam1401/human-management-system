@@ -97,6 +97,37 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
+    /// Đăng ký user mới
+    /// </summary>
+    [HttpPost("register")]
+    public async Task<ActionResult<LoginResponseDto>> Register([FromBody] CreateRegisterDto registerDto)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _authService.RegisterAsync(registerDto);
+
+            if (result == null)
+            {
+                return BadRequest(new { message = "Username hoặc Email đã tồn tại" });
+            }
+
+            _logger.LogInformation("User {Username} registered successfully", result.Username);
+
+            return CreatedAtAction(nameof(CheckAuth), new { id = result.UserId }, result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during registration");
+            return StatusCode(500, new { message = "Đã xảy ra lỗi khi đăng ký" });
+        }
+    }
+
+    /// <summary>
     /// Kiểm tra trạng thái đăng nhập
     /// </summary>
     [HttpGet("check")]
